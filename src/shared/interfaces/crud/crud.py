@@ -22,13 +22,13 @@ class ICrudRepository(ABC, Generic[T, ID]):
         pass
 
     @abstractmethod
-    def get_by_id(self, id: ID) -> ID:
+    def get_by_id(self, id: ID) -> Optional[T]:
         """Obtiene un usuario por ID"""
         pass
 
 
     @abstractmethod
-    def get_all(self):
+    def get_all(self) -> List[T]:
         """Obtiene todas las entidades"""
         pass
 
