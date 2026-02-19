@@ -7,7 +7,9 @@ load_dotenv()
 
 # engine = create_engine(os.environ.get('DATABASE_CONNECTION'), echo=True)
 
-# session_local = sessionmaker(engine, autoflush=False)
+# session_local = sessionmaker(engine, autoflush=False) # crea la maquina creadora de sesiones
+
+# session = Session() # crea la sesion
 
 class Database:
 
@@ -18,10 +20,10 @@ class Database:
     def __init__(self):
         self._connection = os.environ.get('DATABASE_CONNECTION')
         self._engine = create_engine(self._connection, echo=True)
-        self._session = sessionmaker(self._engine, autoflush=False)
+        self._session = sessionmaker(self._engine, autoflush=False) 
     
-    def get_session(self):
-        return self._session
+    def get_db(self):
+        return self._session() # esto es como hacer Session()
     
     def get_engine(self) -> Engine:
         return self._engine
