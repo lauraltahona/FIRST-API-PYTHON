@@ -10,18 +10,31 @@ class UserRepository(ICrudRepository[User, str]):
         """inicializar el repositorio con una instancia de Database"""
         self.database = database
 
-    def save(User):
+    def save(self, entity: User) -> User:
+        try:
+            db = self.database.get_db()
+            db.add(entity)
+            db.commit()
+            db.refresh(entity)
+            return entity
+        except Exception as e:
+            db.rollback()
+            raise e # el repositorio no se encarga de manejar el error Solo garantiza que la transacción no quede dañada.
+            # el raise e hace que no se quede escondido el error, basicamente, lo devuelve
+        finally:
+            db.close()
+
+        
+
+    def delete(self, id: str):
         pass
 
-    def delete(id: str):
+    def update(self, User):
         pass
 
-    def update(User):
+    def get_by_id(self, id: str):
         pass
 
-    def get_by_id(id: str):
-        pass
-
-    def get_all() -> List[User] :
+    def get_all(self) -> List[User] :
         pass
 
