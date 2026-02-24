@@ -1,6 +1,7 @@
 from src.config.db.db_config import Database
 from src.config.db.base_declarative import Base
 from fastapi import FastAPI
+from src.config.routes.router import router
 
 from src.features.user.model import user
 
@@ -21,4 +22,6 @@ Base.metadata.create_all(bind=db.get_engine()) # traer todas las tablas que here
 @app.get("/")
 def health():
     return {"message":"API is down!"}
+
+
  

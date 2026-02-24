@@ -22,9 +22,15 @@ class Database:
         self._engine = create_engine(self._connection, echo=True)
         self._session = sessionmaker(self._engine, autoflush=False) 
     
-    def get_db(self):
-        return self._session() # esto es como hacer Session()
     
+    def get_db(self):
+        session = self._session() # esto es como hacer Session()
+        try:
+            yield session
+        finally:
+            session.close()
+    
+
     def get_engine(self) -> Engine:
         return self._engine
     

@@ -2,7 +2,6 @@ from typing import List
 from src.shared.interfaces.crud import ICrudRepository
 from src.features.user.model import User
 from src.config.db import Database
-from sqlalchemy import Session
 
 class UserRepository(ICrudRepository[User, str]):
 
