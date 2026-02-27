@@ -1,28 +1,24 @@
 from typing import List
 from src.shared.interfaces.crud import ICrudRepository
 from src.features.user.model import User
-from src.config.db import Database
+from sqlalchemy.orm import Session
 
 class UserRepository(ICrudRepository[User, str]):
 
-    def __init__(self, database: Database):
-        """inicializar el repositorio con una instancia de Database"""
-        self.database = database
+    def __init__(self, db: Session):
+        """inicializar el repositorio con una instancia de la Session"""
+        self.db = db
 
-    def save(self, entity: User) -> User:
+    def save(self, user: User) -> User:
         try:
-            db = self.database.get_db()
-            db.add(entity)
-            db.commit()
-            db.refresh(entity)
-            return entity
+            self.db.add(user)
+            self.db.commit()
+            self.db.refresh(user)
+            return user
         except Exception as e:
-            db.rollback()
+            self.db.rollback()
             raise e # el repositorio no se encarga de manejar el error Solo garantiza que la transacción no quede dañada.
             # el raise e hace que no se quede escondido el error, basicamente, lo devuelve
-        finally:
-            db.close()
-
         
 
     def delete(self, id: str):
