@@ -21,7 +21,7 @@ Base.metadata.create_all(bind=db.get_engine()) # traer todas las tablas que here
 
 @app.get("/")
 def health():
-    return {"message":"API is down!"}
+    return {"message":"API is up!"}
 
 
  

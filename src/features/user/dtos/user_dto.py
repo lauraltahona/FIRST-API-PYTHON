@@ -11,7 +11,8 @@ class UserDtoLogin(BaseModel):
 
 
 class UserDtoResponse(BaseModel):
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(from_attributes=True)  # ← esto le dice a Pydantic
+    # "puedes leer atributos de objetos normales, no solo diccionarios"
     id: str
     email: EmailStr
 
