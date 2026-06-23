@@ -1,11 +1,14 @@
 from src.config.db.db_config import Database
 from src.config.db.base_declarative import Base
 from fastapi import FastAPI
-from src.config.routes.router import router
+from src.config.middlewares.cors import setup_cors
 
-from src.features.user.model import user
+#routes
+from src.features.user.routes.user_router import user_router
+
 
 app = FastAPI()
+setup_cors(app)
 
 db = Database()
 db.connect()
@@ -22,6 +25,8 @@ Base.metadata.create_all(bind=db.get_engine()) # traer todas las tablas que here
 @app.get("/")
 def health():
     return {"message":"API is up!"}
+
+app.include_router(user_router)
 
 
  

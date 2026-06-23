@@ -19,7 +19,7 @@ class Database:
  
     def __init__(self):
         self._connection = os.environ.get('DATABASE_CONNECTION')
-        self._engine = create_engine(self._connection, echo=True)
+        self._engine = create_engine(self._connection)
         self._session = sessionmaker(self._engine, autoflush=False) 
     
     
