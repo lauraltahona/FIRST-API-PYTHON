@@ -8,11 +8,12 @@ class UserController:
         self.service = service
 
     def save(self, req: UserDtoRegister) -> UserDtoResponse:
-        try:
-            print("Controlador: procesando solicitud de registro de usuario:", req)
-            user = self.service.save(req)
-            return UserDtoResponse.model_validate(user)
-        except ValueError as e: # error "esperado" de negocio: "ese email ya existe"
-            raise HTTPException(status_code=400, detail=str(e))
-        except Exception as e: # error inesperado, de sistema: "La base de datos se cayó"
-            raise HTTPException(status_code=500, detail="Internal Server Error")
+        print("Controlador: procesando solicitud de registro de usuario:", req)
+        user = self.service.save(req)
+
+        return UserDtoResponse.model_validate(user)
+       
+    async def get_by_id(self, id: int) -> UserDtoResponse:
+        user = self.service.get_by_id(id)
+        return UserDtoResponse.model_validate(user)
+

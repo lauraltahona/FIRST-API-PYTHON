@@ -11,3 +11,4 @@ def register_user(user_dto: UserDtoRegister, service: UserService = Depends(get_
     print("Recibiendo solicitud para registrar usuario:", user_dto)
     controller = UserController(service)
     return controller.save(user_dto)
+
