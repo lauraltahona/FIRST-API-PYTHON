@@ -1,6 +1,7 @@
 from src.features.user.dtos.user_dto import UserDtoRegister
 from src.features.user.model.user import User
 from passlib.context import CryptContext
+from src.errors.exceptions.user_exceptions import UserNotFoundException
 import uuid
 
 class UserService():
@@ -10,7 +11,7 @@ class UserService():
         self.repository = repository
         self.pwd_context = CryptContext(schemes=["bcrypt"])
 
-    def save(self, user_dto: UserDtoRegister):
+    async def save(self, user_dto: UserDtoRegister):
         # user = User(**user.model_dump()) # devuelve un diccionario
         # # para no tener que hacer manualmente: User(name=user_data.name, email=user_data.email, password=user_data.password)
         print("Servicio: procesando solicitud de registro de usuario:", user_dto)
@@ -23,3 +24,11 @@ class UserService():
         )
         print("Creando usuario:", user)
         return self.repository.save(user)
+    
+    async def get_by_id(self, id: int):
+        
+        existingUser = self.repository.get_by_id(id)
+
+        if not existingUser: 
+            raise UserNotFoundException(id)
+

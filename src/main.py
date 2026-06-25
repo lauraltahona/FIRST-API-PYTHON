@@ -2,6 +2,8 @@ from src.config.db.db_config import Database
 from src.config.db.base_declarative import Base
 from fastapi import FastAPI
 from src.config.middlewares.cors import setup_cors
+from src.errors.exceptions.base_exception import AppException
+from src.errors.handlers.exception_handlers import app_exception_handler
 
 #routes
 from src.features.user.routes.user_router import user_router
@@ -26,6 +28,7 @@ Base.metadata.create_all(bind=db.get_engine()) # traer todas las tablas que here
 def health():
     return {"message":"API is up!"}
 
+app.add_exception_handler(AppException, app_exception_handler)
 app.include_router(user_router)
 
 
