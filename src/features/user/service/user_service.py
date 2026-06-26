@@ -25,10 +25,11 @@ class UserService():
         print("Creando usuario:", user)
         return self.repository.save(user)
     
-    async def get_by_id(self, id: int):
+    async def get_by_id(self, id: str):
         
-        existingUser = self.repository.get_by_id(id)
+        existingUser = await self.repository.get_by_id(id)
 
         if not existingUser: 
             raise UserNotFoundException(id)
-
+        
+        return existingUser

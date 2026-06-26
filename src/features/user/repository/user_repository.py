@@ -1,5 +1,5 @@
 from typing import List
-from errors.exceptions.server_exceptions import ServerException
+from src.errors.exceptions.server_exceptions import ServerException
 from src.shared.interfaces.crud.crud import ICrudRepository
 from src.features.user.model.user import User
 from sqlalchemy.orm import Session
@@ -36,7 +36,7 @@ class UserRepository(ICrudRepository[User, str]):
     async def get_by_id(self, id: str) -> User | None:
         try:
 
-            return await self.session.get(User, id)
+            return self.session.get(User, id)
             
         except SQLAlchemyError as e:
              # se loquea el error real internamente 
@@ -45,7 +45,7 @@ class UserRepository(ICrudRepository[User, str]):
             raise DatabaseException()
         except Exception as e: 
             print(f"[UNEXPECTED ERROR] {str(e)}")
-            raise ServerException("Error inesperado al consultar la base de datos")
+            raise ServerException()
 
     def get_all(self) -> List[User] :
         pass

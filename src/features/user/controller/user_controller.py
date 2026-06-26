@@ -13,7 +13,7 @@ class UserController:
 
         return UserDtoResponse.model_validate(user)
        
-    async def get_by_id(self, id: int) -> UserDtoResponse:
-        user = self.service.get_by_id(id)
+    async def get_by_id(self, id: str) -> UserDtoResponse:
+        user = await self.service.get_by_id(id)
         return UserDtoResponse.model_validate(user)
 
