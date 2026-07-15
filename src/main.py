@@ -4,12 +4,15 @@ from fastapi import FastAPI
 from src.config.middlewares.cors import setup_cors
 from src.errors.exceptions.base_exception import AppException
 from src.errors.handlers.exception_handlers import app_exception_handler
-
+from src.config.logging_config import setup_logging
 #routes
 from src.features.user.routes.user_router import user_router
 
 
+setup_logging()
+
 app = FastAPI()
+
 setup_cors(app)
 
 db = Database()
