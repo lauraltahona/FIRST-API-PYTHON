@@ -1,4 +1,6 @@
 from typing import List
+
+from sqlalchemy import select
 from src.errors.exceptions.server_exceptions import ServerException
 from src.shared.interfaces.crud.crud import ICrudRepository
 from src.features.user.model.user import User
@@ -26,6 +28,11 @@ class UserRepository(ICrudRepository[User, str]):
             raise e # el repositorio no se encarga de manejar el error Solo garantiza que la transacción no quede dañada.
             # el raise e hace que no se quede escondido el error, basicamente, lo devuelve
         
+        
+    async def get_by_email(self, email: str):
+        emailFound = await self.session.scalars(select(User).where(User.email == email))
+        return emailFound.scalar_one_or_none() 
+
 
     def delete(self, id: str):
         pass

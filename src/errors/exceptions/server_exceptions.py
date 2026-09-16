@@ -4,6 +4,8 @@ class ServerException(AppException):
 
     def __init__(self):
         super().__init__(
-            message="Error interno con el servidor", 
-            status_code=500
+            message="Error interno con el servidor",
+            status_code=500,
+            error="server_error",
+            code="SERVER_ERROR",
         )

@@ -3,7 +3,7 @@ from src.config.db.base_declarative import Base
 from fastapi import FastAPI
 from src.config.middlewares.cors import setup_cors
 from src.errors.exceptions.base_exception import AppException
-from src.errors.handlers.exception_handlers import app_exception_handler
+from src.errors.handlers.exception_handlers import app_exception_handler, unhandled_exception_handler
 from src.config.logging_config import setup_logging
 #routes
 from src.features.user.routes.user_router import user_router
@@ -32,6 +32,7 @@ def health():
     return {"message":"API is up!"}
 
 app.add_exception_handler(AppException, app_exception_handler)
+app.add_exception_handler(Exception, unhandled_exception_handler)
 app.include_router(user_router)
 
 
