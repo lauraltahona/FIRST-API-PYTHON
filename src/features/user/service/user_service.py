@@ -1,15 +1,14 @@
 from src.features.user.dtos.user_dto import UserDtoRegister
 from src.features.user.model.user import User
-from passlib.context import CryptContext
 from src.errors.exceptions.user_exceptions import UserNotFoundException
 import uuid
 
 class UserService():
 
 
-    def __init__(self, repository):
+    def __init__(self, repository, pwd_context):
         self.repository = repository
-        self.pwd_context = CryptContext(schemes=["bcrypt"])
+        self.pwd_context = pwd_context
 
     async def save(self, user_dto: UserDtoRegister):
         # user = User(**user.model_dump()) # devuelve un diccionario
@@ -33,3 +32,4 @@ class UserService():
             raise UserNotFoundException(id)
         
         return existingUser
+

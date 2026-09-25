@@ -1,3 +1,4 @@
+from src.features.user.routes.auth_router import auth_router
 from src.config.db.db_config import Database
 from src.config.db.base_declarative import Base
 from fastapi import FastAPI
@@ -34,6 +35,7 @@ def health():
 app.add_exception_handler(AppException, app_exception_handler)
 app.add_exception_handler(Exception, unhandled_exception_handler)
 app.include_router(user_router)
+app.include_router(auth_router)
 
 
  
