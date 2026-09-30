@@ -25,13 +25,13 @@ class UserRepository(ICrudRepository[User, str]):
         except Exception as e:
             self.session.rollback()
             print("Error al guardar el usuario:", e)
-            raise e # el repositorio no se encarga de manejar el error Solo garantiza que la transacción no quede dañada.
+            raise # el repositorio no se encarga de manejar el error Solo garantiza que la transacción no quede dañada.
             # el raise e hace que no se quede escondido el error, basicamente, lo devuelve
         
         
-    async def get_by_email(self, email: str):
-        emailFound = await self.session.scalars(select(User).where(User.email == email))
-        return emailFound.scalar_one_or_none() 
+    def get_by_email(self, email: str):
+        emailFound = self.session.scalars(select(User).where(User.email == email))
+        return emailFound.one_or_none() 
 
 
     def delete(self, id: str):
@@ -40,7 +40,7 @@ class UserRepository(ICrudRepository[User, str]):
     def update(self, User):
         pass
 
-    async def get_by_id(self, id: str) -> User | None:
+    def get_by_id(self, id: str) -> User | None:
         try:
 
             return self.session.get(User, id)

@@ -26,7 +26,7 @@ class UserService():
     
     async def get_by_id(self, id: str):
         
-        existingUser = await self.repository.get_by_id(id)
+        existingUser = self.repository.get_by_id(id)
 
         if not existingUser: 
             raise UserNotFoundException(id)

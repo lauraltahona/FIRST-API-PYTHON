@@ -3,6 +3,8 @@ import os
 import uuid
 import jwt
 
+from src.errors.exceptions.auth_exception import InvalidTokenException, TokenExpiredException
+
 SECRET_KEY = os.getenv("SECRET_KEY_JWT")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30

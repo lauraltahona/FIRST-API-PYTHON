@@ -9,7 +9,7 @@ class UserController:
 
     async def save(self, req: UserDtoRegister) -> UserDtoResponse:
         print("Controlador: procesando solicitud de registro de usuario:", req)
-        user = self.service.save(req)
+        user = await self.service.save(req)
 
         return UserDtoResponse.model_validate(user)
 

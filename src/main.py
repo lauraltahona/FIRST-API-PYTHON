@@ -3,6 +3,7 @@ from src.config.db.db_config import Database
 from src.config.db.base_declarative import Base
 from fastapi import FastAPI
 from src.config.middlewares.cors import setup_cors
+from src.config.rate_limit import setup_rate_limit
 from src.errors.exceptions.base_exception import AppException
 from src.errors.handlers.exception_handlers import app_exception_handler, unhandled_exception_handler
 from src.config.logging_config import setup_logging
@@ -13,8 +14,9 @@ from src.features.user.routes.user_router import user_router
 setup_logging()
 
 app = FastAPI()
-
+# config de la API
 setup_cors(app)
+setup_rate_limit(app)
 
 db = Database()
 db.connect()
